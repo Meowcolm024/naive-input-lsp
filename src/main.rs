@@ -63,26 +63,6 @@ impl Keymap {
     }
 }
 
-// #[derive(Debug)]
-// struct Keymap {
-//     map: KM,
-// }
-
-// impl Keymap {
-//     pub fn new(json: serde_json::Value) -> Self {
-//         Self {
-//             map: KM::new(&json).unwrap_or(KM {
-//                 here: vec![],
-//                 cont: HashMap::new(),
-//             }),
-//         }
-//     }
-
-//     pub fn lookup(&self, prefix: &str) -> Vec<String> {
-//         self.map.get(&mut prefix.chars())
-//     }
-// }
-
 #[derive(Debug)]
 struct Backend {
     client: Client,
@@ -96,10 +76,7 @@ impl LanguageServer for Backend {
         self.client
             .log_message(MessageType::INFO, "aim server initialized!")
             .await;
-        let mut symbols = vec!["\\".to_string()];
-        for i in 33..127 {
-            symbols.push(String::from_utf8(vec![i]).unwrap())
-        }
+
         Ok(InitializeResult {
             capabilities: ServerCapabilities {
                 text_document_sync: Some(TextDocumentSyncCapability::Kind(
@@ -107,7 +84,7 @@ impl LanguageServer for Backend {
                 )),
                 completion_provider: Some(CompletionOptions {
                     // resolve_provider: Some(true),
-                    trigger_characters: Some(symbols),
+                    trigger_characters: Some(('!'..='~').map(|s| s.to_string()).collect()),
                     ..Default::default()
                 }),
                 ..Default::default()
