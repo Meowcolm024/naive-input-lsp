@@ -1,0 +1,6 @@
+[[language]]
+name = "agda"
+language-servers = [ "aim-lsp" ]
+
+[language-server.aim-lsp]
+command = "./target/debug/aim-lsp"
