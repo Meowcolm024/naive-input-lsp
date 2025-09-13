@@ -152,7 +152,7 @@ impl LanguageServer for Backend {
                 .collect();
 
             self.client
-                .log_message(MessageType::INFO, format!("Completion for {}", prefix))
+                .log_message(MessageType::INFO, format!("completion for {}", prefix))
                 .await;
 
             Ok(Some(CompletionResponse::Array(completion_items)))
